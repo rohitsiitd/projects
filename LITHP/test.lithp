@@ -1,0 +1,111 @@
+; ======================================================================
+; COMPREHENSIVE LITHP TYPECHECKER TEST SUITE
+; ======================================================================
+; This file contains valid LITHP expressions that should successfully
+; pass the typechecker and print their beautifully inferred types!
+
+; -------- 1. Basic Literals --------
+123
+t
+'a
+'()
+
+; -------- 2. Quoted Lists --------
+'(1 2 3)
+'(a b c)
+'((1 2) (3 4))
+
+; -------- 3. Arithmetic Operations --------
+(+ 1 2)
+(- 10 5)
+(* 3 4)
+(div 10 2)
+(mod 10 3)
+
+; -------- 4. Boolean & Logic --------
+(not t)
+(and t t)
+(or () t)
+
+; -------- 5. Nested Mixed Arithmetic & Logic --------
+(not (= (+ 1 2) 3))
+(or (< 1 2) (> 5 10))
+(and (>= 10 5) (<= 5 5))
+
+; -------- 6. Comparisons --------
+(= 1 1)
+(< 2 3)
+(> 5 4)
+(<= 3 3)
+(>= 5 2)
+(=/= 4 5)
+
+; -------- 7. List Operations --------
+(cons 1 '(2 3))
+(car '(1 2 3))
+(cdr '(1 2 3))
+(cadr '(1 2 3 4))
+(caddr '(1 2 3 4))
+
+; -------- 8. Basic LISP Keywords --------
+(atom 5)
+(atom '(1 2))
+(eq 1 1)
+(eq 'a 'b)
+
+; -------- 9. Conditionals (With Dynamic Typing) --------
+(cond (t 1) (() 2))
+(cond (t 1) (() t) (t '(1 2 3)))
+
+; -------- 10. Lambdas and Inline Applications --------
+((lambda (x) (+ x 1)) 5)
+((lambda (x y) (cond ((> x y) x) (t y))) 10 20)
+
+; -------- 11. Global Recursive Functions (defun) --------
+(defun fact (n) (cond ((= n 0) 1) (t (* n (fact (- n 1))))))
+(fact 5)
+
+; -------- 12. Recursive List Processing --------
+(defun listlen (lst)
+  (cond ((eq lst '()) 0)
+        (t (+ 1 (listlen (cdr lst))))))
+(listlen '(10 20 30 40 50))
+
+(defun sumlist (lst)
+  (cond ((eq lst '()) 0)
+        (t (+ (car lst) (sumlist (cdr lst))))))
+(sumlist '(1 2 3 4 5))
+
+; -------- 13. Higher-Order Functions (HOF) --------
+(defun applytwice (f x)
+  (f (f x)))
+
+(defun addtwo (n) (+ n 2))
+(applytwice addtwo 10)
+
+(defun map (f lst)
+  (cond ((eq lst '()) '())
+        (t (cons (f (car lst)) (map f (cdr lst))))))
+(map addtwo '(10 20 30))
+
+(applytwice (lambda (x) (* x 3)) 5)
+(map (lambda (x) (> x 0)) '(1 2 3))
+
+; -------- 14. Edge Cases: Union Types & Dynamic Conds --------
+(defun weirdmath (x)
+  (cond ((> x 10) (+ x 1))
+        ((< x 0) t)
+        (t '(1 2 3))))
+(weirdmath 5)
+
+; -------- 15. Edge Cases: Inline Label Recursion & Deep C*R --------
+((label factinline (lambda (n)
+   (cond ((= n 0) 1)
+         (t (* n (factinline (- n 1))))))) 5)
+
+(defun getfourth (lst) (cadddr lst))
+(getfourth '(100 200 300 400 500))
+
+; -------- 16. Dynamic Curried Application --------
+; Evaluates a conditional to successfully return and execute a lambda
+((cond (t (lambda (x) (+ x 1)))) 5)
