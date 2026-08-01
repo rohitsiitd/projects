@@ -1,0 +1,532 @@
+.pageShell {
+  min-height: calc(100vh - 4rem);
+  padding: clamp(1rem, 2vw, 2rem);
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(99, 102, 241, 0.08),
+      transparent 28%
+    ),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+}
+
+.pageTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pageSplitHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pageTitleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pageTitle {
+  margin: 0;
+  color: #0f172a;
+  font-size: clamp(1.9rem, 3vw, 2.45rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.pageSubtitle {
+  margin: 0;
+  color: #475569;
+  font-size: 0.98rem;
+}
+
+.backButton {
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  color: #334155;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.backButton:hover {
+  background-color: #ffffff;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.pageCenter {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: #f3f4f6;
+}
+
+.authCard,
+.modalCard,
+.surfaceCard {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
+}
+
+.authCard,
+.modalCard {
+  width: min(100%, 460px);
+  padding: 2rem;
+  border-radius: 16px;
+}
+
+.modalCard {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.surfaceCard {
+  padding: 1.25rem;
+  border-radius: 16px;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, 0.38);
+  backdrop-filter: blur(6px);
+}
+
+.modalContent {
+  width: min(100%, 460px);
+  margin: 1rem 0;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.modalHeader h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.2rem;
+}
+
+.closeButton {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  color: #111827;
+}
+
+.cardTitle {
+  margin: 0 0 1.5rem;
+  color: #111827;
+  font-size: 1.5rem;
+}
+
+.form,
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fieldGroup,
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fieldGroup label,
+.inputGroup label {
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.input,
+.fieldGroup input,
+.fieldGroup select,
+.fieldGroup textarea,
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  color: #111827;
+  font: inherit;
+}
+
+.input:focus,
+.fieldGroup input:focus,
+.fieldGroup select:focus,
+.fieldGroup textarea:focus,
+.inputGroup input:focus,
+.inputGroup select:focus,
+.inputGroup textarea:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.buttonRow > * {
+  flex: 1;
+}
+
+.primaryButton,
+.secondaryButton {
+  border: none;
+  border-radius: 10px;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    opacity 0.2s;
+}
+
+.primaryButton {
+  background-color: #4f46e5;
+  color: #ffffff;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background-color: #4338ca;
+}
+
+.secondaryButton {
+  background-color: #ffffff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background-color: #f8fafc;
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.error {
+  border: 1px solid #f87171;
+  border-radius: 6px;
+  padding: 0.75rem;
+  background-color: #fef2f2;
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+.helperText {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.formHint {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+.timelineSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.timelineTitle {
+  margin: 0;
+  color: #111827;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.timelineList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.timelineItem {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.85rem;
+  background: #f9fafb;
+}
+
+.timelineHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.45rem;
+}
+
+.timelineAuthor {
+  font-weight: 700;
+  color: #111827;
+}
+
+.timelineDate {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.timelineEvent {
+  margin: 0;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.timelineComment {
+  margin: 0;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+.commentComposer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.commentComposerActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.inlineControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.smallButton {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #374151;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.paginationText {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.paginationButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tinyButton {
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tinyButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.richTextToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.85rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.richTextButton {
+  min-width: 2.5rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #374151;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.richTextButton:hover,
+.tinyButton:hover:not(:disabled),
+.smallButton:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #9ca3af;
+}
+
+.boldButton {
+  font-weight: 800;
+}
+
+.italicButton {
+  font-style: italic;
+}
+
+.underlineButton {
+  text-decoration: underline;
+}
+
+.strikethroughButton {
+  text-decoration: line-through;
+}
+
+.codeButton {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+.editActionRow {
+  margin-top: 0.75rem;
+}
+
+.deleteActionButton {
+  color: #dc2626;
+  border-color: #fecaca;
+  background: #fff5f5;
+}
+
+.deleteActionButton:hover:not(:disabled) {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.smallButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.linkText {
+  margin: 0.5rem 0 0;
+  color: #4b5563;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.linkText a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.linkText a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .pageTopBar,
+  .pageSplitHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .authCard,
+  .modalCard {
+    padding: 1.5rem;
+  }
+
+  .buttonRow {
+    flex-direction: column;
+  }
+
+  .paginationControls,
+  .commentComposerActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .paginationButtons {
+    width: 100%;
+  }
+
+  .tinyButton {
+    flex: 1;
+  }
+}
+
+.disabledInput {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background-color: #f9fafb;
+}

@@ -1,0 +1,244 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum GlobalRole {
+  GLOBAL_ADMIN
+  USER
+}
+
+enum ProjectRole {
+  PROJECT_ADMIN
+  PROJECT_MEMBER
+  PROJECT_VIEWER
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum ActivityType {
+  STATUS_CHANGE
+  ASSIGNEE_CHANGE
+  PRIORITY_CHANGE
+  COMMENT_ADDED
+  COMMENT_EDITED
+  COMMENT_DELETED
+  TASK_CREATED
+}
+
+enum IssueType {
+  STORY
+  TASK
+  BUG
+}
+
+enum NotificationType {
+  TASK_ASSIGNED
+  STATUS_CHANGED
+  COMMENT_ADDED
+  USER_MENTIONED
+}
+
+model User {
+  id         Int        @id @default(autoincrement())
+  username   String     @unique
+  email      String     @unique
+  password   String
+  avatar     String?
+  globalRole GlobalRole @default(USER)
+
+  // relations
+  memberships     ProjectMembership[]
+  createdProjects Project[]
+  refreshTokens   RefreshToken[]
+  notifications   Notification[]
+  auditLogs       AuditLog[]
+  comments        Comment[]
+  assignedTasks   Task[]              @relation("TaskAssignee")
+  reportedTasks   Task[]              @relation("TaskReporter")
+}
+
+model Project {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  createdById Int
+  archived    Boolean   @default(false)
+  archivedAt  DateTime?
+  updatedAt   DateTime?  @updatedAt
+
+  //relations 
+  createdBy           User                 @relation(fields: [createdById], references: [id])
+  members             ProjectMembership[]
+  createdAt           DateTime             @default(now())
+  boards              Board[]
+  workflowTransitions WorkflowTransition[]
+
+  @@index([createdById])
+}
+
+model ProjectMembership {
+  id        Int         @id @default(autoincrement())
+  userId    Int
+  projectId Int
+  role      ProjectRole
+
+  //relations 
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+  @@index([projectId])
+  @@index([userId])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Board {
+  id          Int      @id @default(autoincrement())
+  projectId   Int
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+  columns     Column[]
+
+  project             Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  workflowTransitions WorkflowTransition[]
+
+  @@index([projectId])
+}
+
+model Column {
+  id       Int    @id @default(autoincrement())
+  title    String
+  order    Int
+  boardId  Int
+  wipLimit Int?
+  status   String @default("TODO")
+
+  //relations
+  board           Board                @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  tasks           Task[]
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime?             @updatedAt
+  transitionsFrom WorkflowTransition[] @relation("FromTransition")
+  transitionsTo   WorkflowTransition[] @relation("ToTransition")
+
+  @@index([boardId])
+}
+
+model Task {
+  id            Int            @id @default(autoincrement())
+  title         String
+  columnId      Int
+  column        Column         @relation(fields: [columnId], references: [id], onDelete: Cascade)
+  description   String?
+  order         Int
+  issueType     IssueType      @default(TASK)
+  priority      Priority       @default(MEDIUM)
+  parentId      Int?
+  parent        Task?          @relation("StoryChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children      Task[]         @relation("StoryChildren")
+  assigneeId    Int?
+  assignee      User?          @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  reporterId    Int
+  reporter      User           @relation("TaskReporter", fields: [reporterId], references: [id])
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt
+  dueDate       DateTime?
+  resolvedAt    DateTime?
+  closedAt      DateTime?
+  comments      Comment[]
+  auditLogs     AuditLog[]
+  notifications Notification[]
+
+  @@index([columnId, order])
+  @@index([columnId])
+  @@index([parentId])
+  @@index([assigneeId])
+  @@index([reporterId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  taskId    Int
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@index([taskId])
+  @@index([authorId])
+}
+
+model AuditLog {
+  id        Int          @id @default(autoincrement())
+  taskId    Int
+  userId    Int
+  type      ActivityType
+  oldValue  String?
+  newValue  String?
+  createdAt DateTime     @default(now())
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([taskId])
+  @@index([userId])
+}
+
+model WorkflowTransition {
+  id        Int     @id @default(autoincrement())
+  projectId Int
+  boardId   Int
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  board     Board   @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  fromColumnId Int
+  toColumnId   Int
+
+  fromColumn Column @relation("FromTransition", fields: [fromColumnId], references: [id], onDelete:Cascade)
+  toColumn   Column @relation("ToTransition", fields: [toColumnId], references: [id], onDelete:Cascade)
+
+  @@unique([projectId, boardId, fromColumnId, toColumnId])
+  @@index([boardId, fromColumnId])
+  @@index([projectId])
+  @@index([boardId])
+  @@index([fromColumnId])
+  @@index([toColumnId])
+}
+
+model Notification {
+  id        Int              @id @default(autoincrement())
+  userId    Int
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taskId    Int?
+  task      Task?            @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  message   String
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  
+  @@index([userId])
+  @@index([taskId])
+}

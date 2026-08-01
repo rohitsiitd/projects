@@ -1,0 +1,223 @@
+.page {
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 1rem 2rem 2rem;
+  color: #111827;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.boardCanvas {
+  min-height: 100%;
+  padding: 1rem;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(180deg, #f3f4f6 0%, #e5e7eb 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.boardScrollContainer {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  align-items: stretch;
+  min-height: 0;
+  padding: 0.25rem 0 2.5rem;
+  overflow-y: hidden;
+}
+
+.boardScrollContainer::-webkit-scrollbar {
+  height: 10px;
+}
+
+.boardScrollContainer::-webkit-scrollbar-track {
+  background: #e5e7eb;
+  border-radius: 999px;
+}
+
+.boardScrollContainer::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.boardScrollContainer::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.columnWrapper {
+  min-width: 320px;
+  width: 320px;
+  flex-shrink: 0;
+}
+
+.emptyCard {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  width: 100%;
+  padding: 4rem;
+  text-align: center;
+  color: #64748b;
+  font-size: 1.1rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  color: #6b7280;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.addTaskWrapper {
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+.boardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.boardCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.18s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.boardCard:hover {
+  transform: translateY(-2px);
+  border-color: #d1d5db;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+
+.clickableCard {
+  cursor: pointer;
+}
+
+.boardCardHeader h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.05rem;
+}
+
+.boardCard p {
+  margin: 0.85rem 0 1rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.transitionList {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.transitionItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.transitionLabel {
+  font-weight: 600;
+  color: #111827;
+}
+
+.transitionArrow {
+  color: #9ca3af;
+  margin: 0 0.45rem;
+}
+
+.transitionRemoveButton {
+  color: #dc2626;
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.transitionComposer {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  align-items: flex-end;
+  background: #f9fafb;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.workflowModal {
+  width: min(100%, 500px);
+}
+
+.workflowBody {
+  margin-top: 1rem;
+}
+
+.transitionField {
+  flex: 1;
+}
+
+.transitionSubmitButton {
+  padding: 0.8rem 1rem;
+}
+
+@media (max-width: 720px) {
+  .columnWrapper {
+    min-width: min(85vw, 320px);
+    width: min(85vw, 320px);
+  }
+
+  .transitionComposer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.taskHighlight {
+  background-color: #fef08a !important;
+  transition: background-color 0.5s ease;
+}
+
+.boardCardActions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+}

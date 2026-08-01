@@ -1,0 +1,155 @@
+.page {
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 2rem 2rem;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.backButton,
+.logoutButton,
+.uploadButton {
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.backButton {
+  align-self: flex-start;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+}
+
+.card {
+  width: min(100%, 36rem);
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
+}
+
+.avatarShell {
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 0 auto 1rem;
+}
+
+.avatar,
+.avatarImage {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  background: #4f46e5;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.avatarImage {
+  object-fit: cover;
+  display: block;
+  border: 1px solid #e5e7eb;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #6b7280;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.card h1 {
+  margin: 0.45rem 0;
+  color: #111827;
+}
+
+.email,
+.role {
+  margin: 0.4rem 0;
+  color: #6b7280;
+}
+
+.uploadButton {
+  margin-top: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.1rem;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.fileInput {
+  display: none;
+}
+
+.error {
+  margin: 0.8rem 0 0;
+  color: #b42318;
+}
+
+.logoutButton {
+  margin-top: 1rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #fecaca;
+  color: #ef4444;
+}
+
+.uploadButton:hover,
+.logoutButton:hover,
+.backButton:hover {
+  opacity: 0.95;
+}
+
+.uploadButton:hover {
+  background: #4338ca;
+}
+
+.logoutButton:hover {
+  background: #fef2f2;
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 1rem;
+  }
+
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .uploadButton,
+  .logoutButton {
+    width: 100%;
+  }
+}
